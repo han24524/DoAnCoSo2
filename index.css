@@ -1,0 +1,172 @@
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    height: 6rem;
+    margin: -10px;
+    position: relative;
+}
+.logo img{
+    width: 15rem;
+    height: 8rem;
+    object-fit: contain;
+}
+
+.search {
+    display: flex;
+    height: 3rem;
+}
+.searchbtn{
+    width: 3rem;
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+    border: transparent;
+    font-size: 20px;
+    background-color: rgba(53, 53, 53, 0.921);
+    color: rgb(104, 104, 104);
+}
+.searchtext{
+    width: 17rem;
+    height: 3rem;
+    border-radius: 0 10px 10px 0;
+    border: none;
+    padding: 0px 0px;
+    background-color: rgba(53, 53, 53, 0.921);
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+.loginmenu{
+    width: 7rem;
+    height: 3rem;
+    font-size: 17px;
+    border-radius: 10px;
+    color: rgb(241, 241, 241);
+    background-color: rgb(191, 42, 42);
+    margin-left: 30px;
+}
+.loginmenu:hover{
+    background-color: rgb(222, 199, 170);
+    color: black;
+    cursor: pointer;
+}
+
+/* //////////////////////  BODY  /////////////////////////////////////////// */
+
+.container-body{
+    background-color: rgb(0, 0, 0);
+    margin: 30px;
+    padding: 20px;
+}
+.advertisement{
+    padding: 30px 0 30px 0;
+    color: rgba(21, 208, 208, 0.902);
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #3b3f41;
+}
+.slide-film{
+    background-color: rgb(0, 0, 0);
+}
+.slide-film h2, .section-update h2{
+    color: rgba(123, 123, 123, 0.858);
+    font-family: sans-serif;
+    padding: 20px 0 0 10px;
+    cursor: pointer;
+}
+.main-body{
+    display: flex;
+    flex-flow: row wrap;
+}
+/* ////////////////////  left  ///////////////////////////////////////// */
+.main-body-left{
+    background-color: brown;
+    width: 75%;
+}
+.section-highlight{
+    background-color: chartreuse;
+}
+.section-nominate{
+    background-color:  deeppink;
+    height: 50rem;
+}
+.section-extend{
+    background-color: cadetblue;
+    height: 5rem;
+}
+/* //////////////// left UPDATE   ///////////////////////////// */
+.section-update{
+    background-color:  coral;
+}
+.section-update .section{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    padding: 20px;
+    background-color: aquamarine;
+}
+.section-update .content{
+    display: flex;
+    flex-direction: column;
+    background-color: blue;
+    height: 15rem;
+}
+.status_movie{
+    background-color: chartreuse;
+    
+}
+.url_movie{
+    background-color: crimson;
+    width: 100%;
+    height: 100%;
+}
+.name_movie{
+    background-color: darkmagenta;
+    z-index: 2;
+}
+/* //////////////////  right   ////////////////////////////////////// */
+.main-body-right{
+    background-color: yellow;
+    width: 25%;
+    height: 70rem;
+}
+
+/* //////////////////  FOOTER  ////////////////////////////////////// */
+.extend-part{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+}
+.extend-content label{
+    padding: 20px;
+    font-size: 20px;
+    color: rgb(199, 199, 199);
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+}
+.contact{
+    color: rgb(118, 124, 130);
+    font-size: 50px;
+    margin-left: 9rem;
+    cursor: pointer;
+}
+.contact i:hover{
+    background-color: rgba(95, 95, 95, 0.888);
+    color: white;
+}
+.footer{
+    text-align: center;
+    color: #78909c;
+    font-size: 18px;
+    cursor: pointer;
+}
+.footer p:hover{
+    text-decoration: underline;
+}
+
+
+
+
