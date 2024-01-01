@@ -13,9 +13,11 @@
     object-fit: contain;
     margin-left: 17px;
 }
-
-.search {
+form {
     display: flex;
+    width: 100%;
+}
+.search {
     height: 3rem;
 }
 .searchbtn{
@@ -250,4 +252,44 @@ video{
     background-color: #e82888;
     color: #fff;
     cursor: pointer;
+}
+
+/* ------------------------------------- */
+
+@media screen and (max-width:1130px) {
+    .container-section{
+        font-size: 13px;
+    }
+    .container-play{
+        right: 0;
+        
+    }
+    .container-play i{
+        font-size: 4rem;
+        top: -111px;
+        right: -25px;
+    }
+    .circle{
+        width: 130px;
+        height: 130px;
+    }
+    video {
+        height: 13.5rem;
+    }
+    .text-center-1 span{
+        font-size: 18px;
+        margin: 0;
+    }
+    .text-center-2, .text-episode{
+        font-size: 16px;
+    }
+    .text-episode div{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .text-episode span{
+        font-size: 12px;
+    }
+
 }

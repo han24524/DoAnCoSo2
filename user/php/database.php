@@ -53,5 +53,5 @@
     }
 
     // Đóng kết nối CSDL
-    $conn->close();
+    // $conn->close();
     ?>

@@ -19,7 +19,10 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
     <style>
-
+        b1{
+            width: 100%;
+            font-size: 24px;
+        }
         .center {
             display: flex;
             justify-content: center;
@@ -35,7 +38,6 @@
         }
 
         .update-tab img {
-            width: max-content;
             height: 35rem;
             margin: 0 auto;
         }
@@ -51,6 +53,60 @@
                 opacity: 1;
             }
         }
+        @media screen and (max-width:1310px){
+            .update-tab img {
+                width: 70%;
+                height: 30rem;
+            }
+            b1{
+                font-size: 20px;
+            }
+        }
+        @media screen and (max-width:1290px){
+            .update-tab img {
+                width: 60%;
+                height: 26rem;
+            }
+            b1{
+                font-size: 18px;
+            }
+        }
+        @media screen and (max-width:1100px){
+            .update-tab img {                
+                width: 50%;
+                height: 22rem;
+            }
+            b1{
+                font-size: 16px;
+            }
+        }
+        @media screen and (max-width:900px){
+            .update-tab img {
+                width: 40%;
+                height: 18rem;
+            }
+            b1{
+                font-size: 14px;
+            }
+        }
+        @media screen and (max-width:800px){
+            .update-tab img {
+                width: 30%;
+                height: 12rem;
+            }
+            b1{
+                font-size: 10px;
+            }
+        }
+        @media screen and (max-width:600px){
+            .update-tab img {
+                width: 20%;
+                height: 10rem;
+            }
+            b1{
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -64,7 +120,7 @@
     }
 
     // Truy vấn CSDL
-    $sql = "SELECT name, url_movie FROM movie WHERE release_year=2023 ORDER BY id_movie DESC";
+    $sql = "SELECT id_movie, name, url_movie FROM movie WHERE release_year=2023 ORDER BY id_movie DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -72,6 +128,7 @@
 
         while ($row = $result->fetch_assoc()) {
             // Dữ liệu từ CSDL
+            $id_movie = $row['id_movie'];
             $nameMovie = $row['name'];
             $urlMovie = $row['url_movie'];
 
@@ -79,10 +136,11 @@
             $slideClass = ($result->num_rows % 2 == 0) ? 'large-slide' : '';
 
             // Hiển thị dữ liệu trong slider
-            echo '<a style="text-decoration:none; color:white;">
+            echo '<a href="film.php?id=' . $id_movie . '"
+                    style="text-decoration:none; color:white;">
                     <div class="update-tab ' . $slideClass . '">
                         <img src="' . $urlMovie . '" alt="' . $nameMovie . '">
-                        <h3>' . $nameMovie . '</h3>
+                        <b1>' . $nameMovie . '</b1>
                     </div>
                 </a>';
         }

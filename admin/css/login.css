@@ -60,3 +60,13 @@ body{
     opacity: 1;
   }
 }
+
+@media screen and (max-width:1130px) {
+  div.container{
+      width: 18rem;
+  }
+  div.container div.image img{
+    width: 170px;
+  }
+
+}

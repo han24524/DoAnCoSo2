@@ -15,13 +15,12 @@
     <div class="container-search">
         <label for="select-menu">Chọn Menu:</label>
             <select name="select-menu" id="select-menu" onclick="chon()">
-                <option value="1" id="1">Xem Phim</option>
                 <option value="2" id="2">Năm Phát Hành</option>
                 <option value="3" id="3">Thể Loại</option>
                 <option value="4" id="4">Top Phim</option>
                 <option value="5" id="5">Quốc Gia</option>
             </select>
-        <input type="submit" value="Chọn"  class="btn-search" onclick="">
+        <!-- <input type="submit" value="Chọn"  class="btn-search" onclick=""> -->
         <!-- <input type="submit" value="Thêm" id="btn-insert-menu" onclick="panelInsertmenu()">
         <input type="submit" value="Xóa" id="btn-delete-menu" onclick="panelDeletemenu()"> -->
     </div>
@@ -61,13 +60,26 @@
     ?>
 
     <script>
+        chon();
         function chon() {
             let e = document.getElementById('select-menu').selectedIndex;
-            if (e == 1) {
-                document.getElementsByClassName('value-2')[0].style.display = 'table';
-                document.getElementsByClassName('value-3')[0].style.display = 'none';
-                document.getElementsByClassName('value-4')[0].style.display = 'none';
-                document.getElementsByClassName('value-5')[0].style.display = 'none';
+            document.getElementsByClassName('value-2')[0].style.display = 'none';
+            document.getElementsByClassName('value-3')[0].style.display = 'none';
+            document.getElementsByClassName('value-4')[0].style.display = 'none';
+            document.getElementsByClassName('value-5')[0].style.display = 'none';
+
+            document.getElementById('ten-2').style.display = 'none';
+            document.getElementById('ten-3').style.display = 'none';
+            document.getElementById('ten-4').style.display = 'none';
+            document.getElementById('ten-5').style.display = 'none';
+
+            for (let i = 0; i < 5 ; i++) {
+                if (e === i) {
+                    var dlBang = 'value-' + (i+2);
+                    var tenBang = 'ten-' + (i+2);
+                    document.getElementsByClassName(dlBang)[0].style.display = 'table';
+                    document.getElementById(tenBang).style.display = 'block';
+                }
             }
         }
     </script>

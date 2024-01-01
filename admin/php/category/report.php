@@ -70,6 +70,9 @@
       var month = document.getElementById("thang").value;
       if (month === '') {
         month = new Date().getMonth() + 1;
+        if (month < 10) {
+          month = "0" + month;
+        }
       }
       var year = document.getElementById("nam").value;
       if (year === '') {
@@ -92,10 +95,14 @@
           cot.push(0);
         }
       }
+      
       // cột
       for (var i = 0; i < jsonData.length; i++) {
         var thang_kt = jsonData[i]['viewTime'].split("-")[1];
-
+        if (thang_kt < 10) {
+          thang_kt = thang_kt.split("0")[1];
+        }
+        console.log("tháng chọn: " + month + " tháng: " + thang_kt+" loai thong ke: ");
         if (loai_thong_ke === 0 && thang_kt == month) {
           var ngay_kt = jsonData[i]['viewTime'].split("-")[2];
 
@@ -128,7 +135,7 @@
         data: {
           labels: hang,
           datasets: [{
-            label: '# of Votes',
+            label: 'Lượt xem',
             data: cot,
             borderWidth: 1
           }]

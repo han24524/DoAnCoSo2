@@ -32,24 +32,25 @@
       background-color: #ccc;
     }
 
-    .tabcontent-container {
+    /* .tabcontent-container {
       position: relative;
       height: 100%;
       width: 100%;
-    }
+    } */
 
     .tabcontent {
-      position: absolute;
+      /* position: absolute; */
       top: 0;
       width: 100%;
-      height: 100%;
+      /* height: 100%; */
       transition: transform 0.3s ease-in-out;
       display: none; /* Ẩn tất cả các tabcontent khi chưa được chọn */
     }
     .tabcontent.show {
       display: flex;
       flex-direction: column;
-      height: 30rem;
+      /* height: 30rem; */
+      width: 100%;
       gap: 20px;
       transform: translateY(0);
     }
@@ -60,14 +61,16 @@
     }
 
     .week img {
-      width: 150px;
-      height: 259px;
+      width: 5rem;
+      height: 100%;
     }
     .week:hover{
       cursor: pointer;
       opacity: 0.5;
     }
-
+    .status{
+      color: yellow;
+    }
   </style>
 </head>
 
@@ -93,8 +96,9 @@
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 echo 
-                "<div class='week'>
-                  <div class='week-content'>
+                "<a class='week' href='film.php?id={$row['id_movie']}'
+                  style='text-decoration:none; '>
+                <div class='week-content'>
                     <p class='name_movie'>{$row["name"]}</p>
                     &nbsp; <span class='updated_episode'>{$row["updated_episode"]}</span> &nbsp;
                     <span class='status'>{$row["status"]}</span><br><br><br>
@@ -102,7 +106,7 @@
                     <span class='actor_name'>{$row["actor_name"]}</span>
                   </div>
                     <img class='url_movie' src='{$row["url_movie"]}' alt=''>
-                </div>";
+                </a>";
             }
         } else {
             echo "<p>Không có kết quả.</p>";
@@ -124,16 +128,17 @@
           if ($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
                   echo 
-                  "<div class='week'>
-                  <div class='week-content'>
-                    <p class='name_movie'>{$row["name"]}</p>
-                    &nbsp; <span class='updated_episode'>{$row["updated_episode"]}</span> &nbsp;
-                    <span class='status'>{$row["status"]}</span><br><br><br>
-                    <span class='genre'>{$row["genre"]}</span><br>
-                    <span class='actor_name'>{$row["actor_name"]}</span>
-                  </div>
+                  "<a class='week' href='film.php?id={$row['id_movie']}'
+                      style='text-decoration:none; '>
+                    <div class='week-content'>
+                      <p class='name_movie'>{$row["name"]}</p>
+                      &nbsp; <span class='updated_episode'>{$row["updated_episode"]}</span> &nbsp;
+                      <span class='status'>{$row["status"]}</span><br><br><br>
+                      <span class='genre'>{$row["genre"]}</span><br>
+                      <span class='actor_name'>{$row["actor_name"]}</span>
+                    </div>
                     <img class='url_movie' src='{$row["url_movie"]}' alt=''>
-                </div>";
+                  </a>";
               }
           } else {
               echo "<p>Không có kết quả.</p>";
@@ -155,16 +160,17 @@
           if ($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
                   echo 
-                  "<div class='week'>
-                  <div class='week-content'>
-                    <p class='name_movie'>{$row["name"]}</p>
-                    &nbsp; <span class='updated_episode'>{$row["updated_episode"]}</span> &nbsp;
-                    <span class='status'>{$row["status"]}</span><br><br><br>
-                    <span class='genre'>{$row["genre"]}</span><br>
-                    <span class='actor_name'>{$row["actor_name"]}</span>
-                  </div>
+                  "<a class='week' href='film.php?id={$row['id_movie']}'
+                      style='text-decoration:none; '>
+                    <div class='week-content'>
+                      <p class='name_movie'>{$row["name"]}</p>
+                      &nbsp; <span class='updated_episode'>{$row["updated_episode"]}</span> &nbsp;
+                      <span class='status'>{$row["status"]}</span><br><br><br>
+                      <span class='genre'>{$row["genre"]}</span><br>
+                      <span class='actor_name'>{$row["actor_name"]}</span>
+                    </div>
                     <img class='url_movie' src='{$row["url_movie"]}' alt=''>
-                </div>";
+                  </a>";
               }
           } else {
               echo "<p>Không có kết quả.</p>";

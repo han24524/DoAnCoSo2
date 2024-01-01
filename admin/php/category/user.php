@@ -15,9 +15,9 @@
     <div class="container-search">
         <div class="input-field">
             <i class="ri-search-line"></i>
-            <input type="search" id="text-search" placeholder="Tìm kiếm...">
+            <input type="search" name="text-search-user" id="text-search-user" placeholder="Tìm kiếm...">
         </div>
-        <input type="submit" value="Tìm Kiếm"  class="btn-search">
+        <input type="submit" value="Tìm Kiếm" id="btn-search-user"  class="btn-search">
         <input type="submit" value="Thêm" id="btn-insert-user" onclick="panelInsertUser()">
         <input type="submit" value="Xóa" id="btn-delete-user" onclick="panelDeleteUser()">
     </div>
@@ -209,6 +209,55 @@
             }
         }
 
+        function timKiemKhachHang() {
+            var searchText = document.getElementById("text-search-user").value;
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    // console.log(xhr.responseText);
+                    if (xhr.status === 200) {
+                        var responseData = JSON.parse(xhr.responseText);
+                        handleResponseData_user(responseData);
+                    } else {
+                        console.error('Lỗi HTTP: ' + xhr.status);
+                    }
+                }
+            };
+
+
+            xhr.open("POST", "search_user.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("text-search-user=" + searchText);
+        }
+
+        function handleResponseData_user(data) {
+            var tableHTML = generateMovieTable_user(data);
+            document.getElementsByClassName("table-user")[0].innerHTML = tableHTML;
+        }
+
+        function generateMovieTable_user(data) {
+            var tableHTML = "<tr><th>ID người dùng</th><th>Tên người dùng</th><th>Email</th><th>Mật khẩu</th><th>Chỉnh sửa</th></tr>";
+
+            if (data.length > 0) {
+                data.forEach(function(row) {
+                    tableHTML += "<tr>";
+                    tableHTML += "<td>" + row['user_id'] + "</td>";
+                    tableHTML += "<td>" + row['name'] + "</td>";
+                    tableHTML += "<td>" + row['email'] + "</td>";
+                    tableHTML += "<td>" + row['password'] + "</td>";
+                    tableHTML += "<td onclick='panelUpdate(\"" + row['user_id'] + "\", \"" + row['name'] + "\", \"" + row['email'] + "\", \"" + row['password'] + "\")' style='cursor: pointer;'><i class='ri-pencil-fill'></i></td>";
+                    tableHTML += "</tr>";
+                });
+            } else {
+                tableHTML += "<tr><td colspan='12'>Không có dữ liệu</td></tr>";
+            }
+
+            return tableHTML;
+        }
+
+        document.getElementById('btn-search-user').addEventListener('click', timKiemKhachHang);
     </script>
 
 

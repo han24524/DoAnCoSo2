@@ -18,7 +18,7 @@
     <div class="container-search">
         <div class="input-field">
             <i class="ri-search-line"></i>
-            <input type="search" id="text-search" placeholder="Tìm kiếm...">
+            <input type="search" name="text-search-f" id="text-search-f" placeholder="Tìm kiếm...">
         </div>
         <input type="submit" value="Tìm Kiếm" id="btn-search">
         <input type="submit" value="Thêm" id="btn-insert" onclick="panelInsert()">
@@ -218,7 +218,7 @@
             </form>
         </div>
     </div>
-
+   
     <script>
         // Dùng biến isInsertPanelOpen và isUpdatePanelOpen để kiểm tra xem modal nào đang mở, 
         // và chỉ thực hiện đóng modal khi modal tương ứng đang mở.
@@ -322,68 +322,60 @@
         }
 
         function timKiemPhim() {
-            // document.getElementsByClassName("table-user")[1].innerHTML = 
-            var test ="<?php
-                    echo "<table class='table-user'>
-                            <tr>
-                                <th>ID phim</th>
-                                <th>Tên phim</th>
-                                <th>Mô tả</th>
-                                <th>Thể loại</th>
-                                <th>Quốc gia</th>
-                                <th>Trạng thái</th>
-                                <th>Năm Phát hành</th>
-                                <th>Đạo diễn</th>
-                                <th>Diễn viên</th>
-                                <th>Phát sóng</th>
-                                <th>URL phim</th>
-                                <th>Chỉnh sửa</th>
-                            </tr>";
-                    // Truy vấn dữ liệu từ CSDL
-                    if (isset($_POST['text-search'])) {
-                        $sql = "SELECT * FROM movie";
-                        $result = $conn->query($sql);
+            var searchText = document.getElementById("text-search-f").value;
 
-                        $timPhim = $_POST['text-search'];
-                        // Hiển thị dữ liệu từ CSDL trong bảng
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                if (stripos($row['name'], $timPhim) !== false) { 
-                                    echo "<tr>";
-                                    echo "<td>" . $row['id_movie'] . "</td>";
-                                    echo "<td>" . $row['name'] . "</td>";
-                                    echo "<td name='description'>" . $row['description'] . "</td>";
-                                    echo "<td>" . $row['genre'] . "</td>";
-                                    echo "<td>" . $row['country'] . "</td>";
-                                    echo "<td>" . $row['status'] . "</td>";
-                                    echo "<td>" . $row['release_year'] . "</td>";
-                                    echo "<td>" . $row['director'] . "</td>";
-                                    echo "<td>" . $row['actor_name'] . "</td>";
-                                    echo "<td>" . $row['updated_episode'] . "</td>";
-                                    echo "<td><img src='" . $row['url_movie'] . "'></td>";
-                                    echo "<td onclick='panelUpdate(\"" . $row['id_movie'] . "\", 
-                                        \"" . $row['name'] . "\", \"" . $row['description'] . "\", 
-                                        \"" . $row['genre'] . "\", \"" . $row['country'] . "\", 
-                                        \"" . $row['status'] . "\", \"" . $row['release_year'] . "\", 
-                                        \"" . $row['director'] . "\", \"" . $row['actor_name'] . "\",
-                                        \"" . $row['updated_episode'] . "\", \"" . $row['url_movie'] . "\")'
-                                        style='cursor: pointer;'>
-                                        <i class='ri-pencil-fill'></i>
-                                        </td>";
-                                    echo "</tr>";
-                                } else {
-                                    echo "Chuỗi '$needle' không được tìm thấy trong chuỗi '$haystack'.";
-                                }
-                            }
-                        } else {
-                            echo "<tr><td colspan='12'>Không có dữ liệu</td></tr>";
-                        }
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    // console.log(xhr.responseText);
+                    if (xhr.status === 200) {
+                        var responseData = JSON.parse(xhr.responseText);
+                        handleResponseData(responseData);
+                    } else {
+                        console.error('Lỗi HTTP: ' + xhr.status);
                     }
-                    echo "</table>";
-                ?>";
+                }
+            };
 
-            console.log(test);
+
+            xhr.open("POST", "search_movies.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("text-search-f=" + searchText);
         }
+
+        function handleResponseData(data) {
+            var tableHTML = generateMovieTable(data);
+            document.getElementsByClassName("table-user")[1].innerHTML = tableHTML;
+        }
+
+        function generateMovieTable(data) {
+            var tableHTML = "<tr><th>ID phim</th><th>Tên phim</th><th>Mô tả</th><th>Thể loại</th><th>Quốc gia</th><th>Trạng thái</th><th>Năm Phát hành</th><th>Đạo diễn</th><th>Diễn viên</th><th>Phát sóng</th><th>URL phim</th><th>Chỉnh sửa</th></tr>";
+
+            if (data.length > 0) {
+                data.forEach(function(row) {
+                    tableHTML += "<tr>";
+                    tableHTML += "<td>" + row['id_movie'] + "</td>";
+                    tableHTML += "<td>" + row['name'] + "</td>";
+                    tableHTML += "<td name='description'>" + row['description'] + "</td>";
+                    tableHTML += "<td>" + row['genre'] + "</td>";
+                    tableHTML += "<td>" + row['country'] + "</td>";
+                    tableHTML += "<td>" + row['status'] + "</td>";
+                    tableHTML += "<td>" + row['release_year'] + "</td>";
+                    tableHTML += "<td>" + row['director'] + "</td>";
+                    tableHTML += "<td>" + row['actor_name'] + "</td>";
+                    tableHTML += "<td>" + row['updated_episode'] + "</td>";
+                    tableHTML += "<td><img src='" + row['url_movie'] + "'></td>";
+                    tableHTML += "<td onclick='panelUpdate(\"" + row['id_movie'] + "\", \"" + row['name'] + "\", \"" + row['description'] + "\", \"" + row['genre'] + "\", \"" + row['country'] + "\", \"" + row['status'] + "\", \"" + row['release_year'] + "\", \"" + row['director'] + "\", \"" + row['actor_name'] + "\", \"" + row['updated_episode'] + "\", \"" + row['url_movie'] + "\")' style='cursor: pointer;'><i class='ri-pencil-fill'></i></td>";
+                    tableHTML += "</tr>";
+                });
+            } else {
+                tableHTML += "<tr><td colspan='12'>Không có dữ liệu</td></tr>";
+            }
+
+            return tableHTML;
+        }
+
 
         document.getElementById('btn-search').addEventListener('click', timKiemPhim);
         
