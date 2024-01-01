@@ -165,7 +165,7 @@
 
                             $sql = "SELECT * FROM movie";
                             $result = $conn->query($sql);
-
+                            $dem = 0;
                             if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
                                     if (stripos($row["name"], $timKiem) !== false) {
@@ -179,11 +179,13 @@
                                                 <i class='ri-play-circle-fill'></i>
                                             </a>
                                         </div>";
-                                    }
+                                        $dem++;
+                                    } 
                                 }
-                            } else {
-                                echo "<p>Không có kết quả.</p>";
-                            }
+                                if ($dem == 0) {
+                                    echo "<p style='color: red'>Không dữ liệu</p>";
+                                }
+                            } 
                         ?>
                     </div>
                     <!-- <div class="pagination">
