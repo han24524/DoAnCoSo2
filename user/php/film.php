@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOORA - Website xem phim</title>
+    <title>FILM</title>
 
     <link rel="shortcut icon" href="https://o.remove.bg/downloads/518cdd08-0e9a-4429-af07-22a2b9755e51/b0eb89900aa4843b784a771063a90e9a-removebg-preview.png" type="image/x-icon">
     <!-- <link rel="stylesheet" href="menu.css"> -->
@@ -27,11 +27,11 @@
         }
         .main-body-left{
             grid-area: h2;
-            width: 100%;
+            width: 75%;
         }
         .main-body-right{
             grid-area: h3;
-            width: 100%;
+            width: 25%;
 
         }
         .section-update .section, .section-nominate .section{
@@ -43,14 +43,29 @@
         .section-update i, .section-nominate i{
             margin: 10rem 0 0 4rem;
         }
+        @media screen and (max-width:1130px) {
+            .main-body{
+                flex-wrap: wrap;
+                height: auto;
+            }
+            .main-body-left{
+                width: 100%;
+            }
+            
+            .main-body-right{
+                width: 100%;
+                margin-top: 50px;
+            }
+
+        }
     </style>
 
 
 </head>
 <body>
-    <?php 
-        include('database.php');
-    ?>
+<?php 
+    include('database.php');
+?>
     <div class="header">
         <div class="logo">
             <a href="index.php"><img src="../image/ava.png" alt=""></a>
@@ -61,7 +76,7 @@
             ?>
         </div>
         <div class="search">
-            <form action="search.php" method="get">
+            <form action="search.php" method="get" style="display:flex; width:100%;">
                 <button class="searchbtn" id="searchsubmit" type="submit"><i class="ri-search-2-line"></i></button>
                 <input class="searchtext" type="text" name="search_query" placeholder="Tìm: tên phim, đạo diễn, diễn viên">
             </form>
@@ -214,114 +229,126 @@
                 }
             }
         ?>
-        <div class="main-body-left">
-            <div class="section-update">
-                <h2>PHIM NỔI BẬT > <span style="color: #BE3144;">Tất cả</span></h2>
-                <div class="section-update section">
-                    <?php
-                        $conn = new mysqli('localhost', 'root', '', 'website_film');
+        <!-- ////////////////////  main BODY  ///////////// -->
+        <div class="main-body">
 
-                        if ($conn->connect_error) {
-                            die("Kết nối thất bại: " . $conn->connect_error);
-                        }
+            <!-- -------------------------  lEFT BODY  ---------------------- -->
+            <div class="main-body-left">
 
-                        $sql = "SELECT * FROM movie WHERE release_year=2023";
-                        $result = $conn->query($sql);
+                <div class="section-update">
+                    <h2>PHIM NỔI BẬT > <span style="color: #BE3144;">Tất cả</span></h2>
+                    <div class="section-update section">
+                        <?php
+                            $conn = new mysqli('localhost', 'root', '', 'website_film');
 
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                echo "<div class='section-update content'' onclick='redirectToFilmPage(";echo '$row["id_movie"];'; 
-                                // TAO CHỈ THÊM THẺ a
-                                echo ")'>
-                                    <a href='film.php?id={$row['id_movie']}'>
-                                        <span class='status_movie'>{$row["status"]}</span>
-                                        <img class='url_movie' src='{$row["url_movie"]}' alt=''>
-                                        <p class='name_movie'>{$row["name"]}</p>
-                                        <i class='ri-play-circle-fill'></i>
-                                    </a>
-                                </div>";
+                            if ($conn->connect_error) {
+                                die("Kết nối thất bại: " . $conn->connect_error);
                             }
-                        } else {
-                            echo "<p>Không có kết quả.</p>";
-                        }
-                    ?>
-                </div>
-                <div class="pagination">
-                    <a href="#">Previous</a>
-                    <a href="#"class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">Next</a>
-                </div>
-            </div>
 
-            <div class="section-nominate" style="margin-top: 20px;">
-                <h2>PHIM NỔI BẬT > <span style="color: #BE3144;">Tất cả</span></h2>
-                <div class="section-nominate section">
-                    <?php
-                        $conn = new mysqli('localhost', 'root', '', 'website_film');
+                            $sql = "SELECT * FROM movie WHERE release_year=2023";
+                            $result = $conn->query($sql);
 
-                        if ($conn->connect_error) {
-                            die("Kết nối thất bại: " . $conn->connect_error);
-                        }
-
-                        $sql = "SELECT * FROM movie WHERE id_movie<40";
-                        $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                $link = "film.php?id={$row['id_movie']}";
-                                echo 
-                                "<div class='section-nominate content'>
-                                    <a href='film.php?id={$row['id_movie']}'>
-                                        <span class='updated_episode'>{$row["updated_episode"]}</span>
-                                        <img class='url_movie' src='{$row["url_movie"]}' alt=''>
-                                        <p class='name_movie'>{$row["name"]}</p>
-                                        <i class='ri-play-circle-fill'></i>
-                                    </a>
-                                </div>";
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<div class='section-update content'' onclick='redirectToFilmPage(";echo '$row["id_movie"];'; 
+                                    // TAO CHỈ THÊM THẺ a
+                                    echo ")'>
+                                        <a href='film.php?id={$row['id_movie']}'  
+                                        style='text-decoration:none; '>
+                                            <span class='status_movie'>{$row["status"]}</span>
+                                            <img class='url_movie' src='{$row["url_movie"]}' alt=''>
+                                            <p class='name_movie'>{$row["name"]}</p>
+                                            <i class='ri-play-circle-fill'></i>
+                                        </a>
+                                    </div>";
+                                }
+                            } else {
+                                echo "<p>Không có kết quả.</p>";
                             }
-                        } else {
-                            echo "<p>Không có kết quả.</p>";
-                        }
-                    ?>
+                        ?>
+                    </div>
+                    <div class="pagination">
+                        <a href="#">Previous</a>
+                        <a href="#"class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">6</a>
+                        <a href="#">Next</a>
+                    </div>
                 </div>
-                <div class="pagination">
-                    <a href="#">Previous</a>
-                    <a href="#"class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">Next</a>
+
+                <div class="section-nominate" style="margin-top: 20px;">
+                    <h2>PHIM ĐỀ CỬ > <span style="color: #BE3144;">Tất cả</span></h2>
+                    <div class="section-nominate section">
+                        <?php
+                            $conn = new mysqli('localhost', 'root', '', 'website_film');
+
+                            if ($conn->connect_error) {
+                                die("Kết nối thất bại: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT * FROM movie WHERE id_movie<40";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    $link = "film.php?id={$row['id_movie']}";
+                                    echo 
+                                    "<div class='section-nominate content'>
+                                        <a href='film.php?id={$row['id_movie']}'
+                                        style='text-decoration:none; '>
+                                            <span class='updated_episode'>{$row["updated_episode"]}</span>
+                                            <img class='url_movie' src='{$row["url_movie"]}' alt=''>
+                                            <p class='name_movie'>{$row["name"]}</p>
+                                            <i class='ri-play-circle-fill'></i>
+                                        </a>
+                                    </div>";
+                                }
+                            } else {
+                                echo "<p>Không có kết quả.</p>";
+                            }
+                        ?>
+                    </div>
+                    <div class="pagination">
+                        <a href="#">Previous</a>
+                        <a href="#"class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">6</a>
+                        <a href="#">Next</a>
+                    </div>
+
+                </div>
+
+                <div class="section-extend">
+                    <b>THEO NĂM</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>2023</span>&nbsp;&nbsp;
+                    <span>2022</span>&nbsp;&nbsp;
+                    <span>2021</span>&nbsp;&nbsp;
+                    <span>2020</span>&nbsp;&nbsp;
+                    <span>...</span>
+
                 </div>
 
             </div>
-
-            <div class="section-extend">
-                <b>THEO NĂM</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>2023</span>&nbsp;&nbsp;
-                <span>2022</span>&nbsp;&nbsp;
-                <span>2021</span>&nbsp;&nbsp;
-                <span>2020</span>&nbsp;&nbsp;
-                <span>...</span>
-
+            
+            <!-- -------------------------  RIGHT BODY  ---------------------- -->
+            <div class="main-body-right">
+                <h2>&nbsp; BẢNG XẾP HẠNG</h2>
+                <?php 
+                    include('chart.php');
+                ?>
             </div>
 
-        </div>
-                        
-        <div class="main-body-right">
-            <h2>&nbsp; BẢNG XẾP HẠNG</h2>
-            <?php 
-                include('chart.php');
-            ?>
         </div>
 
     </div>
+    
+
     <div class="container-footer">
         <div class="extend-part">
             <div class="logo">
@@ -349,13 +376,14 @@
                 - hoat hinh - bao luc - nhe nhang - hai huoc - trinh tham - phieu luu - 
                 tam ly - khoa hoc - gia tuong - linh di - suc manh - tuoi tre
             </p>
-            <p>YOORA.Net không chịu trách nhiệm đối với bất kỳ nội dung nào được đăng tải trong trang web này.</p>
+            <p>Yoora.Net không chịu trách nhiệm đối với bất kỳ nội dung nào được đăng tải trong trang web này.</p>
             <p>Mọi nội dung đều được sưu tầm và nhúng vào website tương tự như công cụ tìm kiếm Google.</p>
             <p>Disclaimer: This site does not store any files on its server. All contents are provided by non-affiliated third parties.</p>
             <p>Liên hệ: info.yoora@gmail.com</p>
         </div>
 
     </div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 

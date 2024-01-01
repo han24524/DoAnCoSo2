@@ -51,7 +51,4 @@
     } else {
         echo "Không có dữ liệu menu.";
     }
-
-    // Đóng kết nối CSDL
-    // $conn->close();
-    ?>
+?>

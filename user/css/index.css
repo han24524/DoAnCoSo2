@@ -17,18 +17,14 @@
     margin-left: 17px;
 }
 
-form {
-    width: 100%;
-    display: flex;
-}
-
 .search {
+    display: flex;
     height: 3rem;
     width: 30%;
 }
 .searchbtn{
     width: 3rem;
-    height: 3rem;
+    height: 100%;
     border-radius: 10px 0 0 10px;
     border: transparent;
     font-size: 20px;

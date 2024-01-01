@@ -24,4 +24,3 @@ $sql = "INSERT INTO views (id_user, id_movie, viewTime)
 $result = mysqli_query($conn, $sql);
 // Đóng kết nối cơ sở dữ liệu
 $conn->close();
-?>

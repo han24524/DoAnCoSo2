@@ -44,7 +44,6 @@
     ?>
     <!-- ///////////////////////////////////////////////////////////// -->
 
-    <!-- <form action="index.php" method="post"> -->
     <div class="header">
         <div class="logo">
             <a href="index.php"><img src="../image/ava.png" alt=""></a>
@@ -55,11 +54,11 @@
             ?>
         </div>
         <div class="search">
-            <form action="search.php" method="get">
-                <button class="searchbtn" name="searchbtn" type="submit"><i class="ri-search-2-line"></i></button>
+            <form action="search.php" method="get" style="display:flex; width:100%;">
+                <button class="searchbtn" id="searchsubmit" type="submit"><i class="ri-search-2-line"></i></button>
                 <input class="searchtext" type="text" name="search_query" placeholder="Tìm: tên phim, đạo diễn, diễn viên">
             </form>
-        </div>            
+        </div>
         <div class="login">
         <?php
             if (isset($_SESSION['user_id'])) {
@@ -298,7 +297,6 @@
 
     </div>
 
-    <!-- </form> -->
 </body>
   <!-- ___________ Slick Slider ______________ -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

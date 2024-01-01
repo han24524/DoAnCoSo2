@@ -16,32 +16,43 @@
     <link rel="stylesheet" href="../css/menu.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../css/film.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../css/index.css?v=<?php echo time(); ?>">
-  <!--============== Bootstrap link =============-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-  <!-- _____ Slick Slider _____ -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css">
 
     <style>
         body{
             background-color: rgb(24 22 22 / 91%);
         }
+        .section-update b, .section-update a{
+            font-size: 25px;
+            color: #999;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+        .menu{
+            width: 55%;
+        }
+
         .main-body-left{
             grid-area: h2;
             width: 75%;
+            background-color: black;
         }
         .main-body-right{
             grid-area: h3;
             width: 25%;
 
         }
-        .section-update .section, .section-nominate .section{
-            width: 100%;
+        .section-update a:hover > i {
+            left: 30px;
         }
-        .section-update, .section-nominate{
-            padding: 0;
+        .section-update .section{
+            grid-template-columns: repeat(auto-fit, 14rem);
+            width: 95%;
         }
-        .section-update i, .section-nominate i{
-            margin: 10rem 0 0 4rem;
+        .section-extend{
+            width: 95%;
         }
         @media screen and (max-width:1130px) {
             .main-body{
@@ -76,11 +87,11 @@
             ?>
         </div>
         <div class="search">
-            <form action="search.php" method="get">
-                <button class="searchbtn" id="searchsubmit" type="submit"><i class="ri-search-2-line"></i></button>
+            <form action="search.php" method="get" style="display:flex; width:100%;">
+                <button class="searchbtn" name="searchbtn" type="submit"><i class="ri-search-2-line"></i></button>
                 <input class="searchtext" type="text" name="search_query" placeholder="Tìm: tên phim, đạo diễn, diễn viên">
             </form>
-        </div>
+        </div>            
         <div class="login">
         <?php
             if (isset($_SESSION['user_id'])) {
@@ -137,22 +148,20 @@
     </div>
     <!-- /////////////////////////////////  BODY  /////////////////////////////////////////////// -->
     <div class="container-body">
-
-        <!-- ////////////////////  DANH SÁCH NỘI DUNG SEARCH  ///////////// -->
-        <div class="container_listsearch">
-            <a href="index.php"><i class="ri-home-3-line"></i>Trang Chủ</a>>
-            <!-- <a href="">Thể Loại</a> nếu tìm theo thể loại -->
-            <!-- hiển thị danh sách phim theo thể loại như phim nổi bật -->
+        <div class="advertisement">
+            <p>Cú pháp tìm kiếm phim nhanh nhất trên Google:<b style="color:coral;"> [Tên phim + Yoora.Net]</b></p>
+            <p style="color:#FFC436;"><i class="ri-megaphone-fill"></i> Chúc bạn có một trải nghiệm vui vẻ và thật đáng nhớ !</p>
         </div>
 
-        <!-- ////////////////////  main BODY  ///////////// -->
+        <!-- ////////////////////  DANH SÁCH NỘI DUNG SEARCH  ///////////// -->
         <div class="main-body">
 
             <!-- -------------------------  lEFT BODY  ---------------------- -->
             <div class="main-body-left">
 
                 <div class="section-update">
-                    <h2><span style="color: #BE3144;">Tất cả</span></h2>
+                    <b><a href="index.php">
+                        <i class="fa-solid fa-house"></i>Trang Chủ &nbsp;&nbsp;>&nbsp;&nbsp;</a><a>Tìm Kiếm</a></b>
                     <div class="section-update section">
                         <?php
                             $conn = new mysqli('localhost', 'root', '', 'website_film');
@@ -188,7 +197,7 @@
                             } 
                         ?>
                     </div>
-                    <!-- <div class="pagination">
+                    <div class="pagination">
                         <a href="#">Previous</a>
                         <a href="#"class="active">1</a>
                         <a href="#">2</a>
@@ -197,7 +206,7 @@
                         <a href="#">5</a>
                         <a href="#">6</a>
                         <a href="#">Next</a>
-                    </div> -->
+                    </div>
                 </div>
 
 
