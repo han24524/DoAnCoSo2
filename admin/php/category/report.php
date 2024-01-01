@@ -98,27 +98,31 @@
       
       // cột
       for (var i = 0; i < jsonData.length; i++) {
-        var thang_kt = jsonData[i]['viewTime'].split("-")[1];
-        if (thang_kt < 10) {
-          thang_kt = thang_kt.split("0")[1];
-        }
-        console.log("tháng chọn: " + month + " tháng: " + thang_kt+" loai thong ke: ");
-        if (loai_thong_ke === 0 && thang_kt == month) {
-          var ngay_kt = jsonData[i]['viewTime'].split("-")[2];
-
-          for (var j = 1; j < hang.length; j++) {
-            if (ngay_kt == hang[j]) {
-              var temp = hang[j] - 1;
-              cot[temp] += 1;
-              break;
-            }
+        var nam_kt = jsonData[i]['viewTime'].split("-")[0];
+        console.log(nam_kt + " vs nam: " + year);
+        if (nam_kt === year) {
+          var thang_kt = jsonData[i]['viewTime'].split("-")[1];
+          if (thang_kt < 10) {
+            thang_kt = thang_kt.split("0")[1];
           }
-        } else if (loai_thong_ke === 1) {
-          for (var j = 1; j < hang.length; j++) {
-            if (thang_kt == hang[j]) {
-              var temp = hang[j] - 1;
-              cot[temp] += 1;
-              break;
+          
+          if (loai_thong_ke === 0 && thang_kt == month) {
+            var ngay_kt = jsonData[i]['viewTime'].split("-")[2];
+
+            for (var j = 0; j < hang.length; j++) {
+              if (ngay_kt == hang[j]) {
+                var temp = hang[j] - 1;
+                cot[temp] += 1;
+                break;
+              }
+            }
+          } else if (loai_thong_ke === 1) {
+            for (var j = 0; j < hang.length; j++) {
+              if (thang_kt == hang[j]) {
+                var temp = hang[j] - 1;
+                cot[temp] += 1;
+                break;
+              }
             }
           }
         }
