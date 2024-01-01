@@ -1,0 +1,55 @@
+.menu {
+    display: flex;
+    color: white;
+    width: 51rem;
+    font-size: 17px;
+    margin-left: -4rem;
+}
+
+.menu-level-1 {
+    display: flex;
+    object-fit: contain;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.menu-level-1-child {
+    width: 10rem;
+    text-align: center;
+}
+
+.menu-level-2 {
+    display: grid;
+    grid-template-columns: 8rem 8rem 8rem;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding-top: 20px;
+    padding-bottom: 12px;
+    margin-top: 0px;
+    width: 27rem;
+    font-size: 21.5px;
+    border-radius: 4px;
+    border-top: 5px solid rgb(231, 200, 25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    list-style-type: none;
+    opacity: 0;
+    transition: all ease 0.2s;
+}
+.menu-level-2-child {
+    height: 40px;
+}
+.menu-level-1-child:hover{
+    color: bisque;
+    transition: all ease 0.5s;
+}
+.menu-level-1-child:hover .menu-level-2 {
+    opacity: 1;
+    z-index: 1;
+    margin-top: 20px;
+}
+
+.menu-level-2-child:hover {
+    color: rgb(132, 132, 132);
+    cursor: pointer;
+}

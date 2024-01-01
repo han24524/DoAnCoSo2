@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Movie 2023</title>
+
+    <!-- Include the Slick CSS and JS files -->
+    <link rel="stylesheet" href="../slide update.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include the Slick JS library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <style>
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.8s;
+        }
+
+        .update-tab {
+            width: 10rem;
+            margin: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .update-tab img {
+            width: max-content;
+            height: 35rem;
+            margin: 0 auto;
+        }
+
+        .large-slide {
+            width: 30rem; /* Đặt kích thước lớn cho slide ở giữa */
+        }
+        @keyframes fadeIn{
+            from{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <?php
+    // Kết nối CSDL
+    $conn = new mysqli('localhost', 'root', '', 'website_film');
+    if ($conn->connect_error) {
+        die('Kết nối không thành công: ' . $conn->connect_error);
+    }
+
+    // Truy vấn CSDL
+    $sql = "SELECT name, url_movie FROM movie WHERE release_year=2023 ORDER BY id_movie DESC";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        echo '<div class="center">';
+
+        while ($row = $result->fetch_assoc()) {
+            // Dữ liệu từ CSDL
+            $nameMovie = $row['name'];
+            $urlMovie = $row['url_movie'];
+
+            // Kiểm tra nếu là slide ở giữa
+            $slideClass = ($result->num_rows % 2 == 0) ? 'large-slide' : '';
+
+            // Hiển thị dữ liệu trong slider
+            echo '<a style="text-decoration:none; color:white;">
+                    <div class="update-tab ' . $slideClass . '">
+                        <img src="' . $urlMovie . '" alt="' . $nameMovie . '">
+                        <h3>' . $nameMovie . '</h3>
+                    </div>
+                </a>';
+        }
+
+        echo '</div>';
+    } else {
+        echo 'Không có dữ liệu phim nào phù hợp với điều kiện.';
+    }
+
+    // Đóng kết nối CSDL
+    $conn->close();
+    ?>
+
+    <script>
+        // Sử dụng Slick để tạo slider
+        $('.center').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 1000,
+        });
+    </script>
+
+</body>
+
+</html>

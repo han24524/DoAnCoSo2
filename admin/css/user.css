@@ -1,0 +1,211 @@
+.container-search{
+    display: flex;
+    margin-left: 10rem;
+    gap: 5rem;
+}
+.input-field{
+    max-width: 380px;
+    width: 110%;
+    height: 55px;
+    background-color: #cac9c9;
+    margin: 10px 0;
+    border-radius: 55px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 6px;
+    overflow: hidden;
+}
+.input-field i {
+    text-align: center;
+    line-height: 55px;
+    color: #181717;
+    font-size: 18px;
+}
+
+.input-field input{
+    background: #cac9c9;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    width: 110%;
+    border-radius: 0px 55px 55px 0px;
+}
+
+.input-field input::before{
+    background-color: #cac9c9;
+}
+.input-field input::placeholder{
+    color: #495c81;
+    font-weight: 500;
+}
+
+.btn-search{
+    font-size: 16px;
+    width: 150px;
+    height: 49px;
+    outline: none;
+    border: none;
+    border-radius: 49px;
+    background-color: #090c11;
+    color: #fff;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-search:hover{
+    background-color: rgb(222, 199, 170);
+    color: #090c11;
+}
+
+/* ----------  TABLE  ----------------------- */
+
+table{
+    margin: 50px 20px;
+    width: 95%;
+    border: 1px solid;
+}
+th, td {
+    border: 1px solid;
+    max-width: 65rem;
+    min-width: 3rem;
+}
+
+table img{
+    width: 5rem;
+}
+
+/* -------------  CHỈNH SỬA   --------------------*/
+
+/* Thêm CSS cho modal */
+.panel-insert-user, .panel-update-user, .panel-delete-user {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.5s ease; /* Thêm animation vào content */
+
+}
+
+.modal-content-insert-user, .modal-content-update-user{
+    background-color: #fefefe;
+    margin: 9% 20%;
+    padding: 20px 20px 40px 20px;
+    border: 1px solid #888;
+    width: 60%;
+}
+.modal-content-delete{
+    background-color: #fefefe;
+    margin: 12% 32%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+}
+.btn-xoa, .btn-khong{
+    width: 20%;
+    height: 36px;
+    background-color: #a4aeb6;
+    border-radius: 35px;
+    font-size: 18px;
+    border: 2px solid black;
+    cursor: pointer;
+}
+.btn-xoa:hover, .btn-khong:hover{
+    background-color: #F3B664;
+    color: wheat;
+}
+#panelAskUser {
+    display: none;
+    color: red; /* Add your desired styles for the panelAsk */
+}
+.modal-content-insert-user h2, .modal-content-update-user h2, .modal-content-delete h2{
+    border-bottom: 2px solid black;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#delete-form{
+    display: flex;
+    flex-direction: column;
+}
+#delete-form input{
+    font-size: 20px;
+}
+.form-insert-user, .form-update-user{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: center;
+}
+.form-insert-user div, .form-update-user div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 80%;
+    font-size: 25px;
+}
+.form-insert-user input, .form-update-user input{
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #c7cbd2;
+    line-height: 1;
+    font-size: 25px;
+    color: #333;
+    width: 20rem;
+}
+.form-insert-user button, .form-update-user button{
+    width: 15%;
+    height: 40px;
+    font-size: 20px;
+}
+
+#btn-insert-user, #btn-search-user, #btn-delete-user{
+    font-size: 16px;
+    width: 150px;
+    height: 49px;
+    outline: none;
+    border: none;
+    border-radius: 49px;
+    background-color: #090c11;
+    color: #fff;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#btn-insert-user:hover, #btn-search-user:hover, #btn-delete-user:hover{
+    background-color: rgb(222, 199, 170);
+    color: #090c11;
+}
