@@ -71,16 +71,8 @@
 
     function xuLyTK(data) {
       var month = document.getElementById("thang").value;
-      if (month === '') {
-        month = new Date().getMonth() + 1;
-        if (month < 10) {
-          month = "0" + month;
-        }
-      }
       var year = document.getElementById("nam").value;
-      if (year === '') {
-        year = new Date().getFullYear();
-      }
+      
       // xữ lý dữ liệu trong bản
       var loai_thong_ke = document.getElementById('thongKe').selectedIndex;
       if (loai_thong_ke === 0 || loai_thong_ke === 1) {

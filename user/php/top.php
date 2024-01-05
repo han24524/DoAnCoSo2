@@ -163,42 +163,10 @@
                     <b><a href="index.php">
                         <i class="fa-solid fa-house"></i>Trang Chủ &nbsp;&nbsp;>&nbsp;&nbsp;</a><a>Thể loại</a></b>
                     <h2 style="color: #BE3144;"><?php echo $_GET['dk'] ?></span></h2>
-                    <div class="section-update section">
-                        <?php
-                            $conn = new mysqli('localhost', 'root', '', 'website_film');
-
-                            if ($conn->connect_error) {
-                                die("Kết nối thất bại: " . $conn->connect_error);
-                            }
-
-                            $theLoai = $_GET['dk'];
-
-                            $sql = "SELECT * FROM movie";
-                            $result = $conn->query($sql);
-                            $dem = 0;
-                            if ($result->num_rows > 0) {
-                                while($row = $result->fetch_assoc()) {
-                                    if (stripos($row["genre"], $theLoai) !== false) {
-                                        echo "<div class='section-update content'' onclick='redirectToFilmPage(";echo '$row["id_movie"];'; 
-                                        echo ")'>
-                                            <a href='film.php?id={$row['id_movie']}'  
-                                            style='text-decoration:none; '>
-                                                <span class='status_movie'>{$row["status"]}</span>
-                                                <img class='url_movie' src='{$row["url_movie"]}' alt=''>
-                                                <p class='name_movie'>{$row["name"]}</p>
-                                                <i class='ri-play-circle-fill'></i>
-                                            </a>
-                                        </div>";
-                                        $dem++;
-                                    } 
-                                }
-                                if ($dem == 0) {
-                                    echo "<p style='color: red'>Không dữ liệu</p>";
-                                }
-                            } 
-                        ?>
+                    <div class="section-update section" id='display_top'>
+                        <!-- thêm dữ liệu -->
                     </div>
-                    <div class="pagination">
+                    <!-- <div class="pagination">
                         <a href="#">Previous</a>
                         <a href="#"class="active">1</a>
                         <a href="#">2</a>
@@ -207,7 +175,7 @@
                         <a href="#">5</a>
                         <a href="#">6</a>
                         <a href="#">Next</a>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -276,5 +244,116 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+<script>
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            var responseData = JSON.parse(xhr.responseText);
+            var xep = sapXepPhim(responseData);
+            displayMovies(xep);
+        } else {
+            console.error('Lỗi HTTP: ' + xhr.status);
+        }
+    }
+    };
+
+    xhr.open("GET", "getMovie.php", true);
+    xhr.send();
+    
+    function sapXepPhim(data, loai) {
+        var now = new Date();
+        var day = now.getDate();
+        var month = now.getMonth() + 1;
+        var year = now.getFullYear();
+
+        // xữ lý dữ liệu trong bản
+        var loai = '<?php echo $_GET['dk'] ?>';
+        
+        var ds = [];
+        for (var i = 0; i < data.length; i++) {
+            var nam_kt = data[i]['viewTime'].split("-")[0];
+            var thang_kt = data[i]['viewTime'].split("-")[1];
+            if (thang_kt < 10) {
+                thang_kt = thang_kt.split("0")[1];
+            }
+            var ngay_kt = data[i]['viewTime'].split("-")[2];
+
+            var ten = data[i]['id_movie'];
+            if (loai == "Theo ngày") {
+                if (nam_kt == year && thang_kt == month && ngay_kt == day) {
+                    if (ten in ds) {
+                        ds[ten]++; 
+                    } else {
+                        ds[ten] = 1;
+                    }
+                } 
+            } else if (loai == "Theo tháng") {
+                if (nam_kt == year && thang_kt == month) {
+                    if (ten in ds) {
+                        ds[ten]++; 
+                    } else {
+                        ds[ten] = 1;
+                    }
+                } 
+            } else if (loai == "Theo năm") {
+                if (nam_kt == year) {
+                    if (ten in ds) {
+                        ds[ten]++; 
+                    } else {
+                        ds[ten] = 1;
+                    }
+                } 
+            }
+        }
+
+        var pairs = [];
+        for (var key in ds) {
+            if (ds.hasOwnProperty(key)) {
+                pairs.push([key, ds[key]]);
+            }
+        }
+        
+        pairs.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+        // console.log(pairs);
+        var sortedObj = {};
+        for (var i = 0; i < pairs.length; i++) {
+            sortedObj[pairs[i][0]] = pairs[i][1];
+        }
+        ds = []
+        for (var key in sortedObj) {
+            var movieInfo = data.find(function(movie) {
+                return movie['id_movie'] == key;
+            });
+            ds.push(movieInfo);
+        }
+        return ds;
+    }
+
+    function displayMovies(movies) {
+        var dem = 0;
+        for (var i = 0; i < movies.length; i++) {
+            var row = movies[i];
+            var movieHtml = "<div class='section-update content' onclick='redirectToFilmPage(" + row.id_movie + ")'>" +
+                                "<a href='film.php?id=" + row.id_movie + "' style='text-decoration:none; '>" +
+                                    "<span class='status_movie'>" + row.status + "</span>" +
+                                    "<img class='url_movie' src='" + row.url_movie + "' alt=''>" +
+                                    "<p class='name_movie'>" + row.name + "</p>" +
+                                    "<i class='ri-play-circle-fill'></i>" +
+                                "</a>" +
+                            "</div>";
+            
+            document.getElementById("display_top").innerHTML += movieHtml;
+            dem++;
+        }
+
+        if (dem == 0) {
+            document.getElementById("display_top").innerHTML = "<p style='color: red'>Không dữ liệu</p>";
+        }
+    }
+</script>
 
 </html>

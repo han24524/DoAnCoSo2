@@ -272,9 +272,11 @@
     </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-</body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+<script>
+    
+</script>
 
+</body>
 </html>
