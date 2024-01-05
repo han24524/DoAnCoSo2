@@ -21,6 +21,8 @@
     <select class="item" name="thongKe" id="thongKe">
         <option value="1">Tháng</option>
         <option value="2">Năm</option>
+        <option value="3">Top phim trong tháng</option>
+        <option value="4">Top phim trong năm</option>
     </select>
     <label class="item" for="thang" name='forThang'>Tháng</label>
     <input class="item" type="text" name="thang" id="thang"> 
@@ -40,33 +42,34 @@
   <script>
     function chonLoaiThongKe() {
       var loai_thong_ke = document.getElementById('thongKe').selectedIndex;  
-      if (loai_thong_ke === 0) {
+      if (loai_thong_ke === 0 || loai_thong_ke === 2) {
         document.getElementsByName('forThang')[0].style.display = 'inline';
         document.getElementsByName('thang')[0].style.display = 'inline';
       } else {
         document.getElementsByName('forThang')[0].style.display = 'none';
         document.getElementsByName('thang')[0].style.display = 'none';
       }
-    }
+    } 
 
     function thucHienThongKe() {
-      <?php
-        $sql_tk = "SELECT * FROM views";
-        $result_tk = $conn->query($sql_tk);
+      var xhr = new XMLHttpRequest();
 
-        if ($result_tk->num_rows > 0) {
-          $data = array();
-
-          while ($row = $result_tk->fetch_assoc()) {
-              $data[] = $row;
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var responseData = JSON.parse(xhr.responseText);
+            xuLyTK(responseData);
+          } else {
+            console.error('Lỗi HTTP: ' + xhr.status);
           }
-
-          $jsonData = json_encode($data);
         }
-      ?>
-      var jsonString = '<?php echo $jsonData; ?>';
-      var jsonData = JSON.parse(jsonString);
+      };
 
+      xhr.open("GET", "getData.php", true);
+      xhr.send();
+    }
+
+    function xuLyTK(data) {
       var month = document.getElementById("thang").value;
       if (month === '') {
         month = new Date().getMonth() + 1;
@@ -80,54 +83,111 @@
       }
       // xữ lý dữ liệu trong bản
       var loai_thong_ke = document.getElementById('thongKe').selectedIndex;
-      var hang = [];
-      var cot = [];
-      // hàng
-      if (loai_thong_ke === 0) {
-        var daysInMonth = new Date(year, month, 0).getDate();
-        for (var i = 1; i <= daysInMonth; i++) {
-          hang.push(i);
-          cot.push(0);
+      if (loai_thong_ke === 0 || loai_thong_ke === 1) {
+        var hang = [];
+        var cot = [];
+        // hàng
+        if (loai_thong_ke === 0) {
+          var daysInMonth = new Date(year, month, 0).getDate();
+          for (var i = 1; i <= daysInMonth; i++) {
+            hang.push(i);
+            cot.push(0);
+          }
+        } else if (loai_thong_ke === 1) {
+          for (var i = 1; i <= 12; i++) {
+            hang.push(i);
+            cot.push(0);
+          }
         }
-      } else if (loai_thong_ke === 1) {
-        for (var i = 1; i <= 12; i++) {
-          hang.push(i);
-          cot.push(0);
+        
+        // cột
+        for (var i = 0; i < data.length; i++) {
+          var nam_kt = data[i]['viewTime'].split("-")[0];
+          // console.log(nam_kt + " vs nam: " + year);
+          if (nam_kt === year) {
+            var thang_kt = data[i]['viewTime'].split("-")[1];
+            if (thang_kt < 10) {
+              thang_kt = thang_kt.split("0")[1];
+            }
+            
+            if (loai_thong_ke === 0 && thang_kt == month) {
+              var ngay_kt = data[i]['viewTime'].split("-")[2];
+
+              for (var j = 0; j < hang.length; j++) {
+                if (ngay_kt == hang[j]) {
+                  var temp = hang[j] - 1;
+                  cot[temp] += 1;
+                  break;
+                }
+              }
+            } else if (loai_thong_ke === 1) {
+              for (var j = 0; j < hang.length; j++) {
+                if (thang_kt == hang[j]) {
+                  var temp = hang[j] - 1;
+                  cot[temp] += 1;
+                  break;
+                }
+              }
+            }
+          }
+        } 
+      } else {
+        var ds = [];
+        for (var i = 0; i < data.length; i++) {
+          var nam_kt = data[i]['viewTime'].split("-")[0];
+          var ten = data[i]['name'];
+          // console.log(nam_kt + " vs nam: " + year);
+          if (nam_kt === year) {
+            var thang_kt = data[i]['viewTime'].split("-")[1];
+            if (thang_kt < 10) {
+              thang_kt = thang_kt.split("0")[1];
+            }
+            
+            if (loai_thong_ke === 2 && thang_kt == month) {
+              if (ten in ds) {
+                ds[ten]++; 
+              } else {
+                ds[ten] = 1;
+              }
+            } else if (loai_thong_ke === 3) {
+              if (ten in ds) {
+                ds[ten]++;  
+              } else {
+                ds[ten] = 1;
+              }
+            }
+          }
+        } 
+
+        var hang = [];
+        var cot = [];
+
+        var pairs = [];
+        for (var key in ds) {
+          if (ds.hasOwnProperty(key)) {
+            pairs.push([key, ds[key]]);
+          }
+        }
+
+        pairs.sort(function(a, b) {
+          return b[1] - a[1];
+        });
+
+        var sortedObj = {};
+        for (var i = 0; i < pairs.length; i++) {
+          sortedObj[pairs[i][0]] = pairs[i][1];
+        }
+
+        for (var prop in sortedObj) {
+          var value = ds[prop];
+          hang.push(prop);
+          cot.push(value);
+          if (hang.length === 9) {
+            break;
+          }
         }
       }
-      
-      // cột
-      for (var i = 0; i < jsonData.length; i++) {
-        var nam_kt = jsonData[i]['viewTime'].split("-")[0];
-        console.log(nam_kt + " vs nam: " + year);
-        if (nam_kt === year) {
-          var thang_kt = jsonData[i]['viewTime'].split("-")[1];
-          if (thang_kt < 10) {
-            thang_kt = thang_kt.split("0")[1];
-          }
-          
-          if (loai_thong_ke === 0 && thang_kt == month) {
-            var ngay_kt = jsonData[i]['viewTime'].split("-")[2];
 
-            for (var j = 0; j < hang.length; j++) {
-              if (ngay_kt == hang[j]) {
-                var temp = hang[j] - 1;
-                cot[temp] += 1;
-                break;
-              }
-            }
-          } else if (loai_thong_ke === 1) {
-            for (var j = 0; j < hang.length; j++) {
-              if (thang_kt == hang[j]) {
-                var temp = hang[j] - 1;
-                cot[temp] += 1;
-                break;
-              }
-            }
-          }
-        }
-      } 
-      
       // bảng thống kê
       if (window.myChart && typeof window.myChart.destroy === 'function') {
         window.myChart.destroy();

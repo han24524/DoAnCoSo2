@@ -50,7 +50,7 @@
         </div>
         <div class="menu">
             <?php
-            echo (buildMenu($menuItems));
+                echo (buildMenu($menuItems));
             ?>
         </div>
         <div class="search">
@@ -319,6 +319,9 @@
         document.body.appendChild(form);
         form.submit();
     }
+
+    // var ds_menu = document.getElementsByName('menu-level-2-child');
+    // console.log(ds_menu[0].innerHTML);
 </script>
 
 </html>

@@ -23,7 +23,18 @@
                     $hasChild = true;
                 }
 
-                $menu .= "<li class='$menuClass-child'>" . $item['name_menu'];
+                if ($item['parent_id_menu'] == 2) {
+                    $menu .= "<li class='$menuClass-child'><a href='nam.php?dk=" . $item['name_menu'] . "'>" . $item['name_menu'] . "</a>";
+                } else if ($item['parent_id_menu'] == 3) { 
+                    $menu .= "<li class='$menuClass-child'><a href='theLoai.php?dk=" . $item['name_menu'] . "'>" . $item['name_menu'] . "</a>";
+                } else if ($item['parent_id_menu'] == 4) { 
+                    $menu .= "<li class='$menuClass-child'><a href='top.php?dk=" . $item['name_menu'] . "'>" . $item['name_menu'] . "</a>";
+                } else if ($item['parent_id_menu'] == 5) { 
+                    $menu .= "<li class='$menuClass-child'><a href='quocGia.php?dk=" . $item['name_menu'] . "'>" . $item['name_menu'] . "</a>";
+                } else {
+                    $menu .= "<li class='$menuClass-child'><a>" . $item['name_menu'] . "</a>";
+                }
+
                 $childMenu = buildMenu($items, $item['id_menu'], $level + 1);
                 if (!empty($childMenu)) {
                     $menu .= $childMenu;

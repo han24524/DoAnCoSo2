@@ -161,8 +161,8 @@
                 
                 <div class="section-update">
                     <b><a href="index.php">
-                        <i class="fa-solid fa-house"></i>Trang Chủ &nbsp;&nbsp;>&nbsp;&nbsp;</a><a>Tìm Kiếm</a></b>
-                    
+                        <i class="fa-solid fa-house"></i>Trang Chủ &nbsp;&nbsp;>&nbsp;&nbsp;</a><a>Thể loại</a></b>
+                    <h2 style="color: #BE3144;"><?php echo $_GET['dk'] ?></span></h2>
                     <div class="section-update section">
                         <?php
                             $conn = new mysqli('localhost', 'root', '', 'website_film');
@@ -171,14 +171,14 @@
                                 die("Kết nối thất bại: " . $conn->connect_error);
                             }
 
-                            $timKiem = $_GET['search_query'];
+                            $theLoai = $_GET['dk'];
 
                             $sql = "SELECT * FROM movie";
                             $result = $conn->query($sql);
                             $dem = 0;
                             if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
-                                    if (stripos($row["name"], $timKiem) !== false) {
+                                    if (stripos($row["genre"], $theLoai) !== false) {
                                         echo "<div class='section-update content'' onclick='redirectToFilmPage(";echo '$row["id_movie"];'; 
                                         echo ")'>
                                             <a href='film.php?id={$row['id_movie']}'  
