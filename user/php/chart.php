@@ -19,7 +19,7 @@
       cursor: pointer;
       padding: 10px 6px;
       transition: 0.3s;
-      font-size: 18px;
+      font-size: 17px;
     }
 
     .tab button:hover {

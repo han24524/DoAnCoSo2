@@ -1,3 +1,6 @@
+a{
+    text-decoration: none;
+}
 .menu {
     display: flex;
     color: white;
@@ -23,7 +26,6 @@
     grid-template-columns: 8rem 8rem 8rem;
     position: absolute;
     background-color: rgb(255, 255, 255);
-    color: black;
     padding-top: 20px;
     padding-bottom: 12px;
     margin-top: 0px;
@@ -38,6 +40,9 @@
     overflow: hidden;
     transition: max-height 0.3s ease;
   
+}
+.menu-level-2 a{
+    color: black;
 }
 .menu-level-2-child {
     height: 40px;
@@ -54,7 +59,7 @@
 
 }
 
-.menu-level-2-child:hover {
+.menu-level-2-child a:hover {
     color: rgb(132, 132, 132);
     cursor: pointer;
 }

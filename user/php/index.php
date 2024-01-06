@@ -69,7 +69,6 @@
                 echo '<span class="username">' . $_SESSION['username'] . '</span>';
                 echo ('</label>');
                 echo ('<div class="user_infor">
-                            <a href="user.php">Thông tin</a><br>
                             <a href="logout.php">Thoát</a>
                         </div>');
 
